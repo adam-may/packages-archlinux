@@ -18,7 +18,8 @@
 
 pkgname='openonload'
 pkgdesc="A high performance network stack from Solarflare."
-pkgver='201606.u1'
+pkgver='201606.u1.2'
+pkgfile='201606-u1.2'
 pkgrel=1
 arch=('i686' 'x86_64')
 url='http://www.openonload.org/'
@@ -26,13 +27,13 @@ license=('custom')
 depends=("linux-lts")
 makedepends=("linux-lts" "linux-lts-headers")
 options=('libtool' '!strip' '!makeflags' '!buildflags' 'staticlibs')
-source=("http://www.openonload.org/download/openonload-${pkgver//\./-}.tgz"
+source=("http://www.openonload.org/download/openonload-${pkgfile}.tgz"
         'openonload.install'
         'openonload.service'
         'openonload-201310-cpp11-space-literal-fix.patch'
         'openonload-201606-archlinux.patch'
 )
-sha512sums=('0bf6eeffbd9c1c3275c8bef6f53f8bcab7fc59677da65a26d40125048916da974c9bff7d37f6bdf6d106464e18ff0264a997ff850e91ee1163bd87a254ec72cd'
+sha512sums=('98533a2346cb691e623e64c270ea704dd559ef60bdd46cb492a5c6840b9c9544fbd33c85a06200166223c295c1032d4a91e432ea6b423b51c44cd68308aa21d1'
             'ac464250f2fb96d13e8ae129bac80c03f8cca62e450fdd765f24ccd064e28e9942e4a16ebc693e75c71fc1eb86c3a1b08337b2e39c6c618e129d8ec87d872bdb'
             'b7e4529e37c64f99c660ca9b58f388cdd8f0d2f250ba875eb210f4909bb1f1c985a065aae64c048ca6f824adc6e3176c6eae1f582c049631326db73e939edd7b'
             'a1d23b60b699c04caee93eb18d855dbe2e65d2115f10eb3771d1a2f04eea8d3b8042550152a5f96140aca759db10c3fbebdde85dbebcf46505c15f2ba7934bdb'
@@ -47,14 +48,14 @@ if [[ -z "$_kernelver" ]]; then
 fi
 
 prepare() {
-  cd "${srcdir}/${pkgname}-${pkgver//\./-}"
+  cd "${srcdir}/${pkgname}-${pkgfile}"
 
   patch -p1 < "${srcdir}/openonload-201310-cpp11-space-literal-fix.patch"
   patch -p1 < "${srcdir}/openonload-201606-archlinux.patch"
 }
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver//\./-}"
+  cd "${srcdir}/${pkgname}-${pkgfile}"
 
   case $CARCH in
     "i686")
@@ -74,7 +75,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver//\./-}"
+  cd "${srcdir}/${pkgname}-${pkgfile}"
 
   # OpenOnload:
   install -dm755 "${pkgdir}/etc/modprobe.d"
